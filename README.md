@@ -145,7 +145,7 @@ object SimpleDataframeExample {
 ```bash
 
 cd project-directory
-mvm package
+mvn compile package
 
 ```
 
@@ -193,8 +193,7 @@ object AnotherDataframeExample {
 ```bash
 
 cd project-directory
-mvn build
-mvm package
+mvn compile package
 
 ```
 
