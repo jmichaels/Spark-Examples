@@ -26,6 +26,7 @@
 // https://medium.com/@radek.strnad/tips-for-using-jdbc-in-apache-spark-sql-396ea7b2e3d3
 //
 // https://dzone.com/articles/the-right-way-to-use-spark-and-jdbc
+//
 //   - The code sample from this one can give you some good ideas about how to automate this:
 //
 //    val primaryKey = executeQuery(url, user, password, s"SHOW KEYS FROM ${config("schema")}.${config("table")} WHERE Key_name = 'PRIMARY'").getString(5)
@@ -33,6 +34,22 @@
 //    val min = result.getString(1).toInt
 //    val max = result.getString(2).toInt
 //    val numPartitions = (max - min) / 5000 + 1
+//
+//    var df = spark.read.format("jdbc").
+//      option("url", s"${url}${config("schema")}").
+//      option("driver", "com.mysql.jdbc.Driver").
+//      option("lowerBound", min).
+//      option("upperBound", max).
+//      option("numPartitions", numPartitions).
+//      option("partitionColumn", primaryKey).
+//      option("dbtable", config("table")).
+//      option("user", user).
+//      option("password", password).load()
+//
+//    // some data manipulations here ...
+//
+//    df.repartition(10).write.mode(SaveMode.Overwrite).parquet(outputPath)
+
 
 
 import org.apache.spark.sql.{SaveMode, SparkSession}
