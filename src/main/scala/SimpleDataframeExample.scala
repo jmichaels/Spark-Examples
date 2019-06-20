@@ -6,6 +6,7 @@ object SimpleDataframeExample {
     val spark = SparkSession
       .builder
       .appName("DataFrame Examples App")
+      .master("local[*]")
       .getOrCreate()
 
     val df = spark
