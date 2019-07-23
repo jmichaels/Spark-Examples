@@ -19,6 +19,10 @@
             <id>cloudera</id>
             <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
         </repository>
+<!--        <repository>-->
+<!--            <id>rubygems-release</id>-->
+<!--            <url>http://rubygems-proxy.torquebox.org/releases</url>-->
+<!--        </repository>-->
     </repositories>
 
     <!-- Change 'compile' to 'provided' if the Jar is available on your Spark cluster -->
@@ -76,6 +80,13 @@
             <version>${sparkVersion}.cloudera2</version>
             <scope>compile</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>rubygems</groupId>-->
+<!--            <artifactId>net-ssh</artifactId>-->
+<!--            <version>2.0.0</version>-->
+<!--            <type>gem</type>-->
+<!--        </dependency>-->
+
         <!--<dependency>-->
             <!--<groupId>org.apache.spark</groupId>-->
             <!--<artifactId>spark-launcher_${scalaVersion}</artifactId>-->
@@ -97,7 +108,16 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.16</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.jruby</groupId>
+            <artifactId>jruby-complete</artifactId>
+            <version>9.2.7.0</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.hierynomus</groupId>-->
+<!--            <artifactId>sshj</artifactId>-->
+<!--            <version>0.27.0</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 
@@ -120,6 +140,44 @@
                 </executions>
             </plugin>
 
+            <!-- For executing JRuby scripts -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+<!--                        <phase>process-resources</phase>-->
+                        <phase>package</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>org.jruby.Main</mainClass>
+                    <arguments>
+                        <argument>${basedir}/src/main/ruby/script_from_maven.rb</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+
+<!--            &lt;!&ndash; For managing gems for JRuby &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>de.saumya.mojo</groupId>-->
+<!--                <artifactId>gem-maven-plugin</artifactId>-->
+<!--                <version>1.1.8</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>initialize</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+
+                <!-- Putty, Plink, and PSCP downloads -->
+                <!-- https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html-->
         </plugins>
     </build>
 </project>

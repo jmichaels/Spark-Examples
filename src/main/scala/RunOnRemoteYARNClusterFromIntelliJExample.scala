@@ -14,12 +14,11 @@ object RunOnRemoteYARNClusterFromIntelliJExample {
       .master("yarn")
       .getOrCreate()
 
-
     val df = spark
       .read
       .option("header", "true")
       .option("inferSchema", "true")
-      .csv("/User/john/Downloads/Metro_Bike_Share_Trip_Data.csv")
+      .csv("hdfs://jmichaels-1.gce.cloudera.com:8020/user/John/cities.csv")
 
     df.show()
   }
