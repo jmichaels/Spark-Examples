@@ -1,4 +1,16 @@
 ```scala
+// TODO
+// Replace this with notes from:
+//
+// https://github.com/markgrover/spark-secure-kafka-app
+//
+// And modify to account for the dual keytab problem
+// - When using a keytab with `spark-submit`
+// - Need to copy the keytab over twice as two different files,
+//   because Spark tries to create the file twice if you pass it
+//   to spark-submit and as your Kafka authentication mechanism 
+
+
 // XXX - WARNING
 // This code is trash...
 // But the secure connection stuff is more or less correct
